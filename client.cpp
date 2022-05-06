@@ -4,8 +4,10 @@
 #include <unistd.h>
 #include <cstring>
 #include <fstream>
+#include <signal.h> 
 
 #define BUF_SIZE 1024
+static volatile int keepRunning = 1; 
 
 using namespace std;
 
@@ -35,11 +37,10 @@ int main(int argc, char* argv[]) {
         cout << "Connected......" << endl;
     }
 
-    while (true) {
+    while (keepRunning) {
         string file_name;
         cout << "Please enter the file name and press Q to stop: ";
         cin >> file_name;
-        cout << file_name << endl;
         if (file_name == "Q" || file_name == "q") {
             break;
         }
