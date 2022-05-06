@@ -4,10 +4,8 @@
 #include <unistd.h>
 #include <cstring>
 #include <fstream>
-#include <signal.h> 
 
 #define BUF_SIZE 1024
-static volatile int keepRunning = 1; 
 
 using namespace std;
 
