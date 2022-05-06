@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
         cout << "Connected......" << endl;
     }
 
-    while (keepRunning) {
+    while (true) {
         string file_name;
         cout << "Please enter the file name and press Q to stop: ";
         cin >> file_name;
