@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     ThreadPool pool(5); // 初始化线程池
     string dir_root = "./file"; // 初始化根目录
 
-    while (true) { // 服务器一致运行
+    while (true) { // 服务器一直运行
         sockaddr_in clnt_addr;
         socklen_t clnt_addr_size = sizeof(clnt_addr);
         int str_len = 0;
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
         if (clnt_socket == -1) {
             error_handling("accept() error!");
         } else {
-            cout << "Connected client......" << endl;
+            cout << inet_ntoa(clnt_addr.sin_addr) << " connected client......" << endl;
             pool.commit(sock_task, dir_root, clnt_socket); // 新连接的通信任务交给子线程
         }
     }
@@ -100,6 +100,10 @@ int pre_processed_sock(char* argv[]) {
     if (serv_socket == -1) {
         error_handling("socket() error!");
     }
+    int option = 1;
+    int opt_len = sizeof(option);
+    setsockopt(serv_socket, SOL_SOCKET, SO_REUSEADDR, &option, opt_len);
+
     sockaddr_in serv_addr;
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
@@ -182,7 +186,7 @@ void send_file(stack<string>& dir_skt, int sock) {
                     for (auto& str : vec) {
                         possible_files += (str + '\n');
                     }
-                    possible_files = "The file you're looking for may be:\n" + possible_files;
+                    possible_files = "the file you're looking for may be:\n" + possible_files;
                     send_message(-1, possible_files, sock);
                     send_file(dir_skt, sock); // 递归处理本层目录
                 }

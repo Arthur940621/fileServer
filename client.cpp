@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
         string file_name;
         cout << "Please enter the file name and press Q to stop: ";
         cin >> file_name;
+        cout << file_name << endl;
         if (file_name == "Q" || file_name == "q") {
             break;
         }
